@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TakuScriptChecker.Properties
+namespace TakuCodeChecker.Properties
 {
 
 
