@@ -64,7 +64,7 @@ namespace TakuCodeChecker {
             }
             
             // Vars
-            Dictionary<string, bool> uniquePuzzles = new Dictionary<string, bool>();
+            List<string> uniquePuzzles = new List<string>();
             int totErrors = 0;
             int totPuzzles = 0;
 
@@ -84,6 +84,15 @@ namespace TakuCodeChecker {
                         errors++;
                         tbOutput.AppendText("Error in: " + puzzle.Code + "; Err: " + res + "\n");
                         tbOutput.ScrollToEnd();
+                    }
+
+                    // Duplicate checker
+                    if (uniquePuzzles.Contains(puzzle.Code)) {
+                        tbOutput.AppendText("Duplicate encountered with code: " + puzzle.Code + "\n");
+                        errors++;
+                        tbOutput.ScrollToEnd();
+                    } else {
+                        uniquePuzzles.Add(puzzle.Code);
                     }
                 }
 
