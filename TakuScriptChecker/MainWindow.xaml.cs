@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
@@ -42,14 +43,63 @@ namespace TakuCodeChecker {
         }
 
         private void BtnFileCheck_Click(object sender, RoutedEventArgs e) {
+            // Get data
             Stream myStream;
             Data input = new Data();
             try {
                 if ((myStream = ofd.OpenFile()) != null) using (StreamReader r = new StreamReader(myStream)) input = JsonConvert.DeserializeObject<Data>(r.ReadToEnd());
             } catch (Exception ex) {
-                MessageBox.Show("Error: " + ex.Message);
+                tbOutput.AppendText("Reading file failed loaded.\n");
+                tbOutput.AppendText("---------------------------------------\n");
+                tbOutput.ScrollToEnd();
+                return;
             }
-            Console.WriteLine(input);
+
+            // Check if there is data
+            if(input.Name == "") {
+                tbOutput.AppendText("No data fount in file...\n");
+                tbOutput.AppendText("---------------------------------------\n");
+                tbOutput.ScrollToEnd();
+                return;
+            }
+            
+            // Vars
+            Dictionary<string, bool> uniquePuzzles = new Dictionary<string, bool>();
+            int totErrors = 0;
+            int totPuzzles = 0;
+
+            // Go over Diffs
+            foreach (Diff diff in input.Diff) {
+                // Log
+                tbOutput.AppendText("** Current diff: "+diff.Name+"\n");
+                tbOutput.ScrollToEnd();
+                int errors = 0;
+
+                // Go over Puzzles
+                foreach(Puzzle puzzle in diff.Puzzle) {
+                    int res = CheckString(puzzle.Code);
+
+                    // Error encountered
+                    if(res != 0) {
+                        errors++;
+                        tbOutput.AppendText("Error in: " + puzzle.Code + "; Err: " + res + "\n");
+                        tbOutput.ScrollToEnd();
+                    }
+                }
+
+                // End log of Diff
+                totErrors += errors;
+                totPuzzles += diff.Puzzle.Count;
+                tbOutput.AppendText("** diff " + diff.Name + " passed with (" + (diff.Puzzle.Count - errors) + "/" + diff.Puzzle.Count + ")\n");
+                tbOutput.AppendText("******\n");
+                tbOutput.ScrollToEnd();
+            }
+
+            // End log
+            tbOutput.AppendText("** Total result: ("+ (totPuzzles -totErrors) + "/" + totPuzzles + ")\n");
+            tbOutput.AppendText((totErrors == 0) ? "All okay!\n" : "Errors encountered, check the logs!\n");
+            tbOutput.AppendText("---------------------------------------\n");
+            tbOutput.ScrollToEnd();
         }
 
         private void BtnStringCheck_Click(object sender, RoutedEventArgs e) {
