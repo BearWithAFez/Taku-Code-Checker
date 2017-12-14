@@ -5,9 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TakuCodeChecker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Label x:Name="label" Content="A simple Takuzu Code checker" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"/>
+        ResizeMode="NoResize"
+        Title="Taku Code Checker" Height="361.061" Width="455.199" ShowInTaskbar="False" WindowStyle="ToolWindow">
+    <Grid Background="#FFEDEDED">        
+        <!--    Static Elements     -->
+        <Label x:Name="label" Content="A simple Takuzu Code checker" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="24" Height="42" Width="350" HorizontalContentAlignment="Center" Padding="0,5"/>
+        <Label x:Name="label1" Content="From string:" HorizontalAlignment="Left" Margin="0,116,0,-58" VerticalAlignment="Top" FontWeight="Bold" FontSize="18" Height="34" Width="114"/>
+        <Label x:Name="label1_Copy" Content="From file:" HorizontalAlignment="Left" Margin="0,58,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="18" Height="34" Width="91"/>
+        <Label x:Name="label1_Copy1" Content="- OR -" HorizontalAlignment="Center" Margin="0,87,0,-4.2" VerticalAlignment="Top" FontWeight="Bold" FontSize="18" Height="34"/>
+        <Label x:Name="label1_Copy2" Content="Output" HorizontalAlignment="Center" Margin="185,146,190.2,-18.4" VerticalAlignment="Top" FontSize="16" Height="34" FontWeight="Bold"/>
 
+        <!--    Input Elements      -->
+        <TextBox x:Name="tbString" HorizontalAlignment="Left" Height="23" Margin="114,122,0,-53" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" FontSize="14"/>
+        <Button x:Name="btnStringCheck" Content="Check" HorizontalAlignment="Left" Margin="357,124,0,-51" VerticalAlignment="Top" Width="75" Height="19" Click="BtnStringCheck_Click"/>
+        <TextBox x:Name="tbFile" HorizontalAlignment="Left" Height="23" Margin="114,64,0,0" VerticalAlignment="Top" Width="156" FontSize="14" IsReadOnly="True"/>
+        <Button x:Name="btnChooseFile" Content="Choose" HorizontalAlignment="Left" Margin="275,66,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="BtnChooseFile_Click"/>
+        <Button x:Name="btnFileCheck" Content="Check" HorizontalAlignment="Left" Margin="357,66,0,0" VerticalAlignment="Top" Width="75" Height="19" Click="BtnFileCheck_Click" IsEnabled="False"/>
+        
+        <!--    Output Elements     -->
+        <TextBox x:Name="tbOutput" HorizontalAlignment="Left" Height="139" Margin="7,178,0,-154.6" TextWrapping="Wrap" Width="426" VerticalAlignment="Top" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
     </Grid>
 </Window>
